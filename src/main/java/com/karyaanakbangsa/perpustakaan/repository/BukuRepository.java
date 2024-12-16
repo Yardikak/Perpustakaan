@@ -5,6 +5,6 @@ import com.karyaanakbangsa.perpustakaan.models.*;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BukuRepository extends JpaRepository<Buku, Long> {
+public interface BukuRepository extends JpaRepository<Buku, Integer> {
     
 }

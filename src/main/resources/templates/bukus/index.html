@@ -13,8 +13,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <body>
         <div class="container mt-5">
             <h2 class="text-center mb-4">Daftar Buku</h2>
-            <a class="btn btn-primary" href="addBuku.html">Add</a>
-            <a class="btn btn-primary" href="index.html">Kembali</a>
+            <a class="btn btn-primary" href="/bukus/create">Add</a>
+            <a class="btn btn-primary" href="/">Kembali</a>
             <table class="table table-hover table-striped table-bordered align-middle">
                 <thead class="table-blue">
                     <tr>
@@ -34,12 +34,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <td th:text="${buku.penerbit}" class="text-center"></td>
                         <td th:text="${buku.tahunTerbit}" class="text-center"></td>
                         <td class="text-center"> 
-                            <a th:href="@{/editBuku(id=${buku.id})}" class="btn btn-primary"> 
-                                Edit
-                            </a>
-                            <a th:href="@{/deleteBuku(id=${buku.id})}" class="btn btn-danger">
-                                Hapus
-                            </a>
+                            <a class="btn btn-primary btn-sm" th:href="@{/bukus/edit(id=${buku.id})}">Edit</a>
+                            <a class="btn btn-danger btn-sm" th:href="@{/bukus/delete(id=${buku.id})}" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>
                 </tbody>
