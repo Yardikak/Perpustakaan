@@ -8,10 +8,9 @@ import lombok.*;
 public class Buku {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String judul;
     private String pengarang;
     private String penerbit;
-    @Column(name = "tahun_terbit")
     private int tahunTerbit;
 }
