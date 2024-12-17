@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BukuRepository extends JpaRepository<Buku, Long> {
-    
+    Buku getById(Long id);
 }
