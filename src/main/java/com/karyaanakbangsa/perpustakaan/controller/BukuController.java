@@ -6,13 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import com.karyaanakbangsa.perpustakaan.models.Buku;
 import com.karyaanakbangsa.perpustakaan.models.BukuDto;
 import com.karyaanakbangsa.perpustakaan.repository.BukuRepository;
-<<<<<<< HEAD
-import jakarta.validation.Valid;
-=======
 
 import jakarta.validation.Valid;
 
->>>>>>> f57e72c (build: create for buku)
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.beans.factory.annotation.Autowired;
