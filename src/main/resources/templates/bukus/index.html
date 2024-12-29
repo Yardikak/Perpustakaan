@@ -1,0 +1,91 @@
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Daftar Buku</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <div class="container mt-5">
+            
+
+            <h2 class="text-center mb-4">Daftar Buku</h2>
+            <div class="d-flex justify-content-between">
+                
+                <form th:action="@{/bukus}" method="get" class="form-inline d-flex my-2 my-lg-0">
+                    <select name="categoryId" class="form-control me-2" style="max-width: 300px;">
+                        <option value="" selected>Semua Kategori</option>
+                        <option th:each="category : ${categories}" 
+                        th:value="${category.id}" 
+                        th:text="${category.nama}">
+                    </option>
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+            <form th:action="@{/bukus/search}" class="form-inline d-flex my-2 my-lg-0 me-3">
+                <input name="query" class="form-control me-2" type="search" placeholder="Search buku" aria-label="Search" style="max-width: 300px;">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            </div>
+            
+            
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <a class="btn btn-primary m-3 ms-0" href="/">Kembali</a>
+                <a class="btn btn-primary m-3 ms-0" th:href="@{/bukus/create}">Add</a>
+                <a class="btn btn-success m-3 ms-0" th:href="@{/checkouts}">Checkout</a>
+                <a class="btn btn-success m-3 ms-0" th:href="@{/borrows}">Data Peminjaman</a>
+            </div >
+            
+            
+            <div sec:authorize="hasAuthority('USER')">
+                <a class="btn btn-primary m-3 ms-0" href="/">Kembali</a>
+                <a class="btn btn-success m-3 ms-0"  th:href="@{/carts}">View Cart</a> <!-- Link to view cart -->
+                <a class="btn btn-success m-3 ms-0" th:href="@{/borrows/{userId}(userId=${userId})}">View Pinjam</a> <!-- Link to view cart -->
+            </div>
+            <table class="table table-hover table-striped table-bordered align-middle">
+                <thead class="table-blue">
+                    <tr>
+                        
+                        <th scope="col" class="text-center">Judul</th>
+                        <th scope="col" class="text-center">Pengarang</th>
+                        <th scope="col" class="text-center">Penerbit</th>
+                        <th scope="col" class="text-center">Tahun Terbit</th>
+                        <th scope="col" class="text-center">Kategori</th>
+                        <th scope="col" 
+                        class="text-center">Durasi Peminjaman</th>
+                        <th scope="col" class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="buku : ${bukus}">
+                        <td th:text="${buku.judul}" class="text-center"></td>
+                        <td th:text="${buku.pengarang}" class="text-center"></td>
+                        <td th:text="${buku.penerbit}" class="text-center"></td>
+                        <td th:text="${buku.tahunTerbit}" class="text-center"></td>
+                        <td th:text="${buku.category.nama}" class="text-center"></td>
+                        <td th:text="${buku.maxPinjam}" class="text-center"></td>
+                        <td class="text-center"> 
+                            <div sec:authorize="hasAuthority('ADMIN')">
+
+                                <a class="btn btn-primary btn-sm" th:href="@{/bukus/{bukuId}/edit(bukuId=${buku.id})}">Edit</a>
+                                <a class="btn btn-danger btn-sm" th:href="@{/bukus/{bukuId}/delete(bukuId=${buku.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+                            </div>
+                            <!-- Button to add book to cart -->
+                            <div sec:authorize="hasAuthority('USER')">
+                                <a class="btn btn-warning btn-sm" 
+                                   th:href="@{/carts/add/{bukuId}(bukuId=${buku.id})}" 
+                                   th:if="${buku.available}">
+                                   Add to Cart
+                                </a>
+                                <span th:if="${!buku.available}" class="text-muted">Tidak Tersedia</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

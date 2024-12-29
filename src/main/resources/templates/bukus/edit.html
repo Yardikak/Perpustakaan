@@ -1,0 +1,155 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{fragments/layout}">
+<head>
+    <title>Edit Buku</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <section layout:fragment="body" class="py-5">
+        <div class="container my-3">
+
+            <div class="row">
+                <div class="col-md-8 mx-auto rounded border p-4">
+                    <h2 class="text-center mb-5">Edit Buku</h2>
+        
+                    <form role="form" method="post" th:action="@{/bukus/{bukuId}/edit(bukuId=${buku.id})}" th:object="${buku}">
+                        <input type="hidden" th:field="*{id}">
+                        <div class="row mb-3">
+                            <label for="judul" class="col-sm-4 col-form-label">Judul</label>
+                            <div class="col-sm-8">
+                            <input
+                                type="text"
+                                class="form-control" 
+                                id="judul"
+                                name="judul"
+                                th:field="*{judul}"
+                                placeholder="Judul"
+                                required
+                                >
+                                <p th:if="${#fields.hasErrors('judul')}" class="text-danger" th:errors="*{judul}"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label for="pengarang" class="col-sm-4 col-form-label">Pengarang</label>
+                            <div class="col-sm-8">
+                                <input
+                                    type="text"
+                                    class="form-control" 
+                                    id="pengarang"
+                                    name="pengarang"
+                                    th:field="*{pengarang}"
+                                    placeholder="Pengarang"
+                                    required
+                                    >
+                                    <p th:if="${#fields.hasErrors('pengarang')}" class="text-danger" th:errors="*{pengarang}"></p>
+                                </div>
+                        </div>
+        
+                        <div class="row mb-3">
+                            <label for="penerbit" class="col-sm-4 col-form-label">Penerbit</label>
+                            <div class="col-sm-8">
+                                <input
+                                    type="text"
+                                    class="form-control" 
+                                    id="penerbit"
+                                    name="penerbit"
+                                    th:field="*{penerbit}"
+                                    placeholder="Penerbit"
+                                    required
+                                    >
+                                    <p th:if="${#fields.hasErrors('penerbit')}" class="text-danger" th:errors="*{penerbit}"></p>
+                                </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label for="tahunTerbit" class="col-sm-4 col-form-label">Tahun Terbit</label>
+                            <div class="col-sm-8">
+                                <input
+                                    type="number"
+                                    class="form-control" 
+                                    id="tahunTerbit"
+                                    name="tahunTerbit"
+                                    th:field="*{tahunTerbit}"
+                                    placeholder="Tahun Terbit"
+                                    required
+                                    min="1500"
+                                    max="3000"
+                                    >
+                                    <p th:if="${#fields.hasErrors('tahunTerbit')}" class="text-danger" th:errors="*{tahunTerbit}"></p>
+                                </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label for="categoryId" class="col-sm-4 col-form-label">Kategori</label>
+                            <div class="col-sm-8">
+
+                                <select id="categoryId" name="categoryId" class="form-control">
+                                    <option value="" disabled>Pilih Kategori</option>
+                                    <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.nama}"
+                                    th:selected="${buku.category != null and category.id == buku.category.id}">
+                                </option>
+                            </select>
+                        </div>
+                        </div>
+                        
+
+                        <div class="row mb-3">
+                            <label for="maxPinjam" class="col-sm-4 col-form-label">Durasi Peminjaman</label>
+                            <div class="col-sm-8">
+                                <input
+                                    type="number"
+                                    class="form-control" 
+                                    id="maxPinjam"
+                                    name="maxPinjam"
+                                    th:field="*{maxPinjam}"
+                                    placeholder="Durasi Pinjam"
+                                    required
+                                    min="1"
+                                    max="30"
+                                    >
+                                    
+                                    <p th:if="${#fields.hasErrors('maxPinjam')}" class="text-danger" th:errors="*{maxPinjam}"></p>
+                                </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="available" class="col-sm-4 col-form-label">Available</label>
+                            <div class="col-sm-8">
+                                <select
+                                    id="available"
+                                    name="available"
+                                    class="form-control"
+                                    th:field="*{available}"
+                                    required>
+                                    <option value="" disabled>Pilih Ketersediaan</option>
+                                    <option value="1" th:selected="${buku.available == true}">Yes</option>
+                                    <option value="0" th:selected="${buku.available == false}">No</option>
+                                </select>
+                                <p th:if="${#fields.hasErrors('available')}" class="text-danger" th:errors="*{available}"></p>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="offset-sm-4 col-sm-4 d-grid">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                            <div class="col-sm-4 d-grid">
+                                <a class="btn btn-outline-primary" href="/bukus">Cancel</a>
+                            </div>
+                        </div>
+        
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+</main>
+</body>
+</html>
